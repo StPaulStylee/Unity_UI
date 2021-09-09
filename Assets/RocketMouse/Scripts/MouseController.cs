@@ -15,14 +15,24 @@ public class MouseController : MonoBehaviour {
   public AudioSource footstepsAudio;
   public ParallaxScroll parallax;
   public Text CoinsLabel;
+  public GameObject RestartDialog;
 
   private Animator animator;
   private bool grounded;
   private bool dead = false;
   private uint coins = 0;
 
+  public void RestartGame() {
+    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+  }
+
+  public void ExitToMenu() {
+    SceneManager.LoadScene("MenuScene");
+  }
+
   void Start() {
     animator = GetComponent<Animator>();
+    RestartDialog.SetActive(false);
   }
 
   void FixedUpdate() {
@@ -68,6 +78,7 @@ public class MouseController : MonoBehaviour {
     }
     dead = true;
     animator.SetBool("dead", true);
+    RestartDialog.SetActive(true);
   }
 
   void CollectCoin(Collider2D coinCollider) {
